@@ -1,0 +1,52 @@
+========================================
+CARA MEMBUKA APLIKASI ABSENSI DIGITAL
+========================================
+
+Ada 2 cara untuk membuka aplikasi:
+
+CARA 1 (Paling Mudah):
+----------------------
+1. Buka folder "Absensi Digital" di Desktop
+2. Klik 2x pada file "index.html"
+3. Aplikasi akan terbuka di browser default Anda
+
+CARA 2 (Melalui Browser):
+--------------------------
+1. Buka browser (Chrome, Firefox, Edge, dll)
+2. Tekan Ctrl + O (atau File > Open)
+3. Cari dan pilih file "index.html" di folder Desktop\Absensi Digital
+4. Klik Open
+
+========================================
+STRUKTUR FILE
+========================================
+
+Absensi Digital/
+├── index.html          (File utama - buka file ini)
+├── style.css           (File styling)
+├── script.js           (File JavaScript)
+├── README.md           (Dokumentasi lengkap)
+└── CARA_MEMBUKA.txt    (File ini)
+
+========================================
+TIPS
+========================================
+
+✓ Pastikan semua file ada dalam satu folder
+✓ Jangan pisahkan file-file tersebut
+✓ Data akan tersimpan otomatis di browser
+✓ Tidak perlu koneksi internet
+
+========================================
+FITUR UTAMA
+========================================
+
+📊 Dashboard - Lihat ringkasan kehadiran
+👥 Data Siswa - Kelola data siswa
+✅ Absensi Harian - Catat kehadiran
+📈 Rekap Absensi - Lihat laporan
+⚙️ Pengaturan - Atur aplikasi
+
+========================================
+
+Selamat menggunakan! 🎓

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absensi Siswa Harian</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">🎓</div>
+                <div class="header-text">
+                    <h1>Absensi Siswa Harian</h1>
+                    <div class="header-info">
+                        <p class="school-name" id="schoolName">SMA Negeri 1</p>
+                        <span class="separator">•</span>
+                        <p class="current-date" id="currentDate"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="user-section">
+                <span class="user-name" id="userName">Guru</span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <ul class="nav-menu">
+            <li class="nav-item active" data-page="dashboard">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </li>
+            <li class="nav-item" data-page="data-siswa">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Data Siswa</span>
+            </li>
+            <li class="nav-item" data-page="absensi">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Absensi Harian</span>
+            </li>
+            <li class="nav-item" data-page="rekap">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Rekap Absensi</span>
+            </li>
+            <li class="nav-item" data-page="pengaturan">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Pengaturan</span>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Page -->
+        <section class="page active" id="dashboard">
+            <div class="page-header">
+                <h2>Dashboard</h2>
+                <p>Ringkasan kehadiran siswa hari ini</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card hadir">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <h3 id="statHadir">0</h3>
+                        <p>Hadir</p>
+                    </div>
+                </div>
+                <div class="stat-card izin">
+                    <div class="stat-icon">💤</div>
+                    <div class="stat-info">
+                        <h3 id="statIzin">0</h3>
+                        <p>Izin</p>
+                    </div>
+                </div>
+                <div class="stat-card sakit">
+                    <div class="stat-icon">🤒</div>
+                    <div class="stat-info">
+                        <h3 id="statSakit">0</h3>
+                        <p>Sakit</p>
+                    </div>
+                </div>
+                <div class="stat-card alfa">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-info">
+                        <h3 id="statAlfa">0</h3>
+                        <p>Alfa</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Persentase Kehadiran Hari Ini</h3>
+                    <div class="percentage-display">
+                        <div class="percentage-circle">
+                            <span id="percentageToday">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Aksi Cepat</h3>
+                    <button class="btn btn-primary btn-large" onclick="navigateToPage('absensi')">
+                        <span>📝</span> Lakukan Absensi Hari Ini
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Siswa Page -->
+        <section class="page" id="data-siswa">
+            <div class="page-header">
+                <h2>Data Siswa</h2>
+                <button class="btn btn-primary" id="btnTambahSiswa">
+                    <span>➕</span> Tambah Siswa
+                </button>
+            </div>
+
+            <div class="filter-section">
+                <select class="form-select" id="filterKelas">
+                    <option value="">Semua Kelas</option>
+                </select>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Siswa</th>
+                                <th>NIS</th>
+                                <th>Kelas</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableSiswa">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Absensi Harian Page -->
+        <section class="page" id="absensi">
+            <div class="page-header">
+                <h2>Absensi Harian</h2>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="btnCetakPDF">
+                        <span>🖨️</span> Cetak Absensi
+                    </button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="form-group">
+                    <label for="absensiKelas">Pilih Kelas</label>
+                    <select class="form-select" id="absensiKelas">
+                        <option value="">-- Pilih Kelas --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="absensiTanggal">Tanggal</label>
+                    <input type="date" class="form-input" id="absensiTanggal">
+                </div>
+            </div>
+
+            <div class="card" id="absensiCard" style="display: none;">
+                <div class="absensi-header">
+                    <h3>Daftar Siswa - <span id="kelasName"></span></h3>
+                    <p>Tanggal: <span id="tanggalAbsensi"></span></p>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table absensi-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Siswa</th>
+                                <th>NIS</th>
+                                <th>Status Kehadiran</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableAbsensi">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary btn-large" id="btnSimpanAbsensi">
+                        <span>💾</span> Simpan Absensi
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rekap Absensi Page -->
+        <section class="page" id="rekap">
+            <div class="page-header">
+                <h2>Rekap Absensi</h2>
+                <button class="btn btn-primary" id="btnCetakRekap">
+                    <span>🖨️</span> Cetak Laporan
+                </button>
+            </div>
+
+            <div class="filter-section">
+                <div class="form-group">
+                    <label for="rekapKelas">Kelas</label>
+                    <select class="form-select" id="rekapKelas">
+                        <option value="">Semua Kelas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rekapTanggalMulai">Tanggal Mulai</label>
+                    <input type="date" class="form-input" id="rekapTanggalMulai">
+                </div>
+                <div class="form-group">
+                    <label for="rekapTanggalAkhir">Tanggal Akhir</label>
+                    <input type="date" class="form-input" id="rekapTanggalAkhir">
+                </div>
+                <button class="btn btn-primary" id="btnTampilkanRekap">Tampilkan</button>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Siswa</th>
+                                <th>Kelas</th>
+                                <th>Hadir</th>
+                                <th>Izin</th>
+                                <th>Sakit</th>
+                                <th>Alfa</th>
+                                <th>Persentase</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableRekap">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card chart-container" id="chartContainer" style="display: none;">
+                <h3>Grafik Kehadiran</h3>
+                <canvas id="attendanceChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Pengaturan Page -->
+        <section class="page" id="pengaturan">
+            <div class="page-header">
+                <h2>Pengaturan</h2>
+            </div>
+
+            <div class="settings-grid">
+                <div class="card">
+                    <h3>Profil Sekolah</h3>
+                    <div class="form-group">
+                        <label for="settingNamaSekolah">Nama Sekolah</label>
+                        <input type="text" class="form-input" id="settingNamaSekolah" placeholder="Masukkan nama sekolah">
+                    </div>
+                    <div class="form-group">
+                        <label for="settingLogoSekolah">Logo Sekolah</label>
+                        <input type="file" class="form-input" id="settingLogoSekolah" accept="image/*">
+                        <div class="logo-preview" id="logoPreview">
+                            <img id="logoPreviewImg" src="" alt="Preview Logo" style="display: none;">
+                            <span id="logoPreviewEmoji">🎓</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="settingNamaKepsek">Nama Kepala Sekolah</label>
+                        <input type="text" class="form-input" id="settingNamaKepsek" placeholder="Masukkan nama kepala sekolah">
+                    </div>
+                    <div class="form-group">
+                        <label for="settingNIPKepsek">NIP Kepala Sekolah</label>
+                        <input type="text" class="form-input" id="settingNIPKepsek" placeholder="Masukkan NIP kepala sekolah">
+                    </div>
+                    <button class="btn btn-primary" id="btnSimpanProfilSekolah">Simpan Profil Sekolah</button>
+                </div>
+
+                <div class="card">
+                    <h3>Profil Guru</h3>
+                    <div class="form-group">
+                        <label for="settingNamaGuru">Nama Guru</label>
+                        <input type="text" class="form-input" id="settingNamaGuru" placeholder="Masukkan nama guru">
+                    </div>
+                    <div class="form-group">
+                        <label for="settingNIPGuru">NIP Guru</label>
+                        <input type="text" class="form-input" id="settingNIPGuru" placeholder="Masukkan NIP guru">
+                    </div>
+                    <button class="btn btn-primary" id="btnSimpanNamaGuru">Simpan Profil Guru</button>
+                </div>
+
+                <div class="card">
+                    <h3>Manajemen Kelas</h3>
+                    <div class="form-group">
+                        <label for="settingNamaKelas">Nama Kelas Baru</label>
+                        <input type="text" class="form-input" id="settingNamaKelas" placeholder="Contoh: X IPA 1">
+                    </div>
+                    <button class="btn btn-primary" id="btnTambahKelas">Tambah Kelas</button>
+                    
+                    <div class="kelas-list" id="kelasList">
+                        <!-- Kelas list will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Tampilan</h3>
+                    <div class="setting-item">
+                        <div>
+                            <strong>Mode Gelap</strong>
+                            <p>Aktifkan tema gelap untuk kenyamanan mata</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="darkModeSwitch">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Data</h3>
+                    <button class="btn btn-secondary" id="btnResetData">
+                        <span>🔄</span> Reset Semua Data
+                    </button>
+                    <p class="text-muted">Perhatian: Tindakan ini akan menghapus semua data absensi dan siswa!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Tambah/Edit Siswa -->
+    <div class="modal" id="modalSiswa">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalSiswaTitle">Tambah Siswa</h3>
+                <button class="modal-close" onclick="closeModal('modalSiswa')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formSiswa">
+                    <input type="hidden" id="siswaId">
+                    <div class="form-group">
+                        <label for="siswaNama">Nama Lengkap</label>
+                        <input type="text" class="form-input" id="siswaNama" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="siswaNIS">NIS</label>
+                        <input type="text" class="form-input" id="siswaNIS" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="siswaKelas">Kelas</label>
+                        <select class="form-select" id="siswaKelas" required>
+                            <option value="">-- Pilih Kelas --</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('modalSiswa')">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span id="notificationText"></span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
